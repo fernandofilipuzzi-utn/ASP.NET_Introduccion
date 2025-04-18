@@ -1,0 +1,67 @@
+@page "/personas"
+@using System.ComponentModel.DataAnnotations
+
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+
+<EditForm Model="persona" OnValidSubmit="HandleValidSubmitAsync">
+
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label for="nombre">Nombre:</label>
+        <InputText id="nombre" @bind-Value="persona.Nombre" class="form-control" />
+        <ValidationMessage For="@(() => persona.Nombre)" />
+    </div>
+
+    <div>
+        <label for="dni">DNI:</label>
+        <InputText id="dni" @bind-Value="persona.DNI" class="form-control" />
+        <ValidationMessage For="@(() => persona.DNI)" />
+    </div>
+
+    <div>
+        <label for="fechaNacimiento">Fecha de Nacimiento (dd/MM/yyyy):</label>
+        <InputText id="fechaNacimiento" @bind-Value="persona.FechaNacimiento" class="form-control" />
+        <ValidationMessage For="@(() => persona.FechaNacimiento)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</EditForm>
+
+@foreach(PersonaViewModel item in personas)
+{
+    <div class="alert alert-info mt-2">
+        <h5>@item.Nombre</h5>
+        <p>DNI: @item.DNI</p>
+        <p>Fecha de Nacimiento: @item.FechaNacimiento</p>
+    </div>
+}
+@using System.Collections.Generic
+
+@code {
+    private PersonaViewModel persona = new PersonaViewModel();
+    List<PersonaViewModel> personas = new List<PersonaViewModel>();
+
+    async private Task HandleValidSubmitAsync()
+    {
+        personas.Add(persona);
+
+        await Task.CompletedTask;
+    }
+
+    public class PersonaViewModel
+    {
+        [Required(ErrorMessage = "El nombre es obligatorio.")]
+        public string Nombre { get; set; }
+
+        [Required(ErrorMessage = "El DNI es obligatorio.")]
+        public string DNI { get; set; }
+
+        [Required(ErrorMessage = "La fecha de nacimiento es obligatoria.")]
+        [RegularExpression(@"\d{2}/\d{2}/\d{4}", ErrorMessage = "El formato de la fecha debe ser dd/MM/yyyy.")]
+        public string FechaNacimiento { get; set; }
+    }
+}
