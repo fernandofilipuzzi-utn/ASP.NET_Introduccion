@@ -1,0 +1,7 @@
+@model int
+
+<h2>Contador: @Model</h2>
+
+<a href="@Url.Action("Index", "Contador", new { valor = Model + 1 })">
+    <button>Incrementar</button>
+</a>
