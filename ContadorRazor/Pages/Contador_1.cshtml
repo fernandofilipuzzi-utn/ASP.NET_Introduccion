@@ -1,0 +1,25 @@
+@page
+
+@model ContadorModel
+
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Mvc.RazorPages;
+
+<h2>Contador: @Model.Valor</h2>
+<a asp-page="./Contador" asp-route-valor="@(Model.Valor + 1)">
+    <button>Incrementar</button>
+</a>
+
+
+@functions{
+    public class ContadorModel : PageModel
+    {
+        [BindProperty(SupportsGet = true)]
+        public int Valor { get; set; }
+
+        public void OnGet()
+        {
+            // Logic can be added here if needed
+        }
+    }
+}

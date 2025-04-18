@@ -1,0 +1,9 @@
+@page
+
+@model ContadorModel
+
+<h2>Contador: @Model.Valor</h2>
+
+<a asp-page="./Contador" asp-route-valor="@(Model.Valor + 1)">
+    <button>Incrementar</button>
+</a>

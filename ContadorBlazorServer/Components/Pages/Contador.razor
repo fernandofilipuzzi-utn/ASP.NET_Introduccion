@@ -1,0 +1,17 @@
+@page "/contador"
+<h3>Contador</h3>
+
+@attribute [StreamRendering]
+@rendermode InteractiveServer
+
+<p>Contador: @contador</p>
+
+<button class="btn btn-primary" @onclick="Incrementar">Incrementar</button>
+
+@code {
+    int contador = 0;
+
+    void Incrementar() {
+        contador++;
+    }
+}
